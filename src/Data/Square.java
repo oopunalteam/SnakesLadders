@@ -15,8 +15,20 @@ public class Square {
 		this.image = image;
 	}
 
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
 	public char getImage() {
 		return image;
+	}
+
+	public void setImage(char image) {
+		this.image = image;
 	}
 
 }

@@ -6,7 +6,15 @@ public class Board {
 	private Square[][] board;
 
 
-	public Board(int size) {
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setBoard() {
 		board = new Square[size][size];
 		int counter = 0;
 		for (int row = 0; row < size; row++) {
@@ -21,7 +29,5 @@ public class Board {
 		return board;
 	}
 
-	public void setSize(int size) {
-		this.size = size;
-	}
+
 }

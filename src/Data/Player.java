@@ -6,10 +6,6 @@ public class Player {
 	private Square position;
 
 
-	public Player (Square firstSquare) {
-		this.position = firstSquare;
-	}
-
 	public char getToken() {
 		return token;
 	}
@@ -25,4 +21,7 @@ public class Player {
 	public void setPosition(Square position) {
 		this.position = position;
 	}
+
+
+
 }

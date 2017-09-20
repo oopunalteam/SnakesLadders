@@ -6,19 +6,58 @@ import ui.UI;
 
 public class GameEngine {
 
-	public static void main (String[] args) {
-		//main
+	//movement. ONLY for testing
 
-		int difficulty = UI.askSize();
+	public static void movement (Player player, Board board) {
+		int move = player.getPosition().getIndex() + UI.askMovement();
 
-		Board board = new Board(difficulty);
+		player.setPosition(board.getBoard()[move][move]);
 
-		Player player = new Player(board.getBoard()[0][0]);
+		board.getBoard()[move][move].setImage(player.getToken());
+	}
 
-		UI.askToken(player);
+	public static void play (Player player, Board board) {
+
+		player.setPosition(board.getBoard()[0][0]);
+
+		board.getBoard()[0][0].setImage(player.getToken());
 
 		UI.printBoard(board);
 
+		boolean win = false;
+
+		while (!win) {
+
+			movement(player, board);
+
+			UI.printBoard(board);
+
+			win = checkWin(player, board);
+		}
 	}
 
+	public static boolean checkWin (Player player, Board board) {
+		if (player.getPosition() == board.getBoard()[board.getSize()-1][board.getSize()-1]) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public static void beginGame () {
+		Board board = new Board();
+		Player player = new Player();
+
+		UI.askSize(board);
+		UI.askToken(player);
+
+		board.setBoard();
+
+		play(player, board);
+	}
+
+	public static void main (String[] args) {
+		UI.menu();
+		beginGame();
+	}
 }
