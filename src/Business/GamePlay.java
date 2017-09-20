@@ -6,7 +6,7 @@ import ui.UI;
 
 
 
-public class GameEngine {
+public class GamePlay {
 
 	public static void play (Player player, Board board) {
 
@@ -23,7 +23,7 @@ public class GameEngine {
 		}
 	}
 
-	public static void beginGame () {
+	public static void startGame() {
 		Board board = new Board();
 		Player player = new Player();
 
@@ -40,8 +40,8 @@ public class GameEngine {
 	}
 
 	public static void main (String[] args) {
-		//UI.menu();
-		beginGame();
+		UI.menu();
+		startGame();
 	}
 
 }

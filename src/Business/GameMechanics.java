@@ -11,8 +11,9 @@ public class GameMechanics {
 	//movement. ONLY for testing
 	public static void movement (Player player, Board board) {
 		int move = UI.askMovement();
+
 		//Erase the player token
-		player.getPosition().setImage( String.valueOf(player.getPosition().getIndex()) );
+		player.getPosition().setImage(String.valueOf(player.getPosition().getIndex()));
 
 		//set new position
 		player.setPosition(board.getBoard()[move - 1]);
