@@ -20,6 +20,6 @@ public class Player {
 
 	public void setPosition(Square position) {
 		this.position = position;
+		position.setImage(position.getImage().concat(String.valueOf(this.token)));
 	}
-
 }

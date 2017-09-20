@@ -87,10 +87,16 @@ public class UI {
 			}
 		}
 		System.out.println();
+		System.out.println();
 	}
 
 	public static int askMovement() {
+		System.out.println("Select the square that you want to move to");
 		return input.nextInt();
+	}
+
+	public static void playerWins () {
+		System.out.println("You win!");
 	}
 
 	public static void badFeedback () {

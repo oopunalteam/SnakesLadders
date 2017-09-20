@@ -3,6 +3,7 @@ package Data;
 public class Square {
 
 	private int index;
+
 	private String image;
 
 
@@ -17,6 +18,10 @@ public class Square {
 
 	public void setIndex(int index) {
 		this.index = index;
+	}
+
+	public String getImage() {
+		return image;
 	}
 
 	public void setImage(String image) {
