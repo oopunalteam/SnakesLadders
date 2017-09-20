@@ -45,13 +45,13 @@ public class UI {
 		int select = input.nextInt();
 		switch (select) {
 			case 1:
-				board.setSize(8);
+				board.setSize((int) Math.pow(8,2));
 				break;
 			case 2:
-				board.setSize(10);
+				board.setSize((int) Math.pow(10,2));
 				break;
 			case 3:
-				board.setSize(12);
+				board.setSize((int) Math.pow(12,2));
 				break;
 			default:
 				badFeedback();
@@ -77,14 +77,16 @@ public class UI {
 
 	//Printing the game
 	public static void printBoard(Board board) {
-
-		for (int row = 0; row < board.getBoard().length; row++) {
-			System.out.print("| ");
-			for (int col = 0; col < board.getBoard().length; col++) {
-				System.out.printf(board.getBoard()[row][col].getImage() + " | ");
+		int l = (int) Math.sqrt(board.getBoard().length);
+		System.out.print("| ");
+		for (int i = board.getBoard().length -1; i >= 0; --i) {
+			System.out.print(board.getBoard()[i] + " | ");
+			if (i % l == 0 && i!= 0) {
+				System.out.println();
+				System.out.print("| ");
 			}
-			System.out.println();
 		}
+		System.out.println();
 	}
 
 	public static int askMovement() {

@@ -11,43 +11,21 @@ public class GameEngine {
 	public static void movement (Player player, Board board) {
 		int move = UI.askMovement();
 
+		player.getPosition().setImage( String.valueOf(player.getPosition().getIndex()) );
 
-		/*
-		public static void printMatrixCharZigZag(char array[][]) {
-			System.out.println("Forma Zig-Zag - Matriz de caracteres");
-			for (int row = 0, col = 0; row < array.length; row++, col++) {
-				if (col % 2 == 0) {
-					for (int column = 0; column < array[row].length; column++) {
-						System.out.printf("%c, ", array[row][column]);
-					}
-				} else {
-					for (int column = array[row].length-1; column >= 0; --column) {
-						System.out.printf("%c, ", array[row][column]);
-					}
-				}
-			}
-			System.out.println();
-		}
-*/
-		player.getPosition().setImage('0'); //Erase the token from past position
+		player.setPosition(board.getBoard()[player.getPosition().getIndex()-2 + move]);
 
-		for (int i = 0; i < move; i++) {
-
-			//mod 8 para cambiar de fila
-		}
-
-		player.setPosition(board.getBoard()[move][move]);
-
-		board.getBoard()[move][move].setImage(player.getToken());
+		board.getBoard()[player.getPosition().getIndex()].setImage(String.valueOf(player.getToken()));
 	}
 
 
+	
 
 	public static void play (Player player, Board board) {
 
-		player.setPosition(board.getBoard()[0][0]);
+		player.setPosition(board.getBoard()[0]);
 
-		board.getBoard()[0][0].setImage(player.getToken());
+		board.getBoard()[0].setImage(String.valueOf(player.getToken()));
 
 		UI.printBoard(board);
 
@@ -60,11 +38,12 @@ public class GameEngine {
 			UI.printBoard(board);
 
 			win = checkWin(player, board);
+
 		}
 	}
 
 	public static boolean checkWin (Player player, Board board) {
-		if (player.getPosition() == board.getBoard()[board.getSize()-1][board.getSize()-1]) {
+		if (player.getPosition().getIndex() == board.getBoard().length-1) {
 			return true;
 		} else {
 			return false;
@@ -84,7 +63,7 @@ public class GameEngine {
 	}
 
 	public static void main (String[] args) {
-		UI.menu();
+		//UI.menu();
 		beginGame();
 	}
 
