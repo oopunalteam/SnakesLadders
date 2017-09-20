@@ -1,11 +1,21 @@
 package ui;
 
+import Data.Board;
+import Data.Player;
+
 import java.util.Scanner;
 
 public class UI {
 
 	private static Scanner input = new Scanner(System.in);
 
+
+	public static void badFeedback () {
+		System.out.println("Seleccione una opción valida");
+		System.out.println();
+	}
+
+	//Setting the game
 	public static void menu () {
 		//Menu text
 		System.out.println("Snakes & Ladders");
@@ -33,36 +43,69 @@ public class UI {
 		}
 	}
 
-	public static int selectDifficulty () {
-		//Difficulty text
+	public static int askSize() {
 
-		int difficulty = 0;
-
-		System.out.println("Seleccione la dificultad");
+		System.out.println("Difficulty:");
 		System.out.println("1: 8x8");
 		System.out.println("2. 10x10");
 		System.out.println("3. 12x12");
 
+		int size = 0;
 
 		int select = input.nextInt();
 		switch (select) {
 			case 1:
-				difficulty = 8;
+				size = 8;
 				break;
 			case 2:
-				difficulty = 8;
+				size = 10;
 				break;
 			case 3:
-				difficulty = 8;
+				size = 12;
 				break;
 			default:
 				badFeedback();
-				selectDifficulty();
+				askSize();
 		}
-		return difficulty;
+		return size;
 	}
 
-	public static String badFeedback () {
-		return "Seleccione una opción valida";
+	public static char convertUppercase (char letter) {
+		int temp = (int) letter;
+		temp = temp - 32;
+		letter = (char) temp;
+		return letter;
 	}
+
+	public static void askToken(Player player) {
+		System.out.println("Select your token");
+
+		char token = input.next().charAt(0);
+
+		if (64 < token && token < 91) {
+			player.setToken(token);
+			System.out.println("You selected the token: " + token);
+		} else if (96 < token && token < 123) {
+			player.setToken(convertUppercase(token));
+			System.out.println("You selected the token: " + token);
+		} else {
+			badFeedback();
+			askToken(player);
+		}
+	}
+
+
+	//Printing the game
+
+	public static void printBoard(Board board) {
+
+		for (int row = 0; row < board.getBoard().length; row++) {
+			System.out.print("|");
+			for (int col = 0; col < board.getBoard().length; col++) {
+				System.out.printf(board.getBoard()[row][col].getImage() + "|");
+			}
+			System.out.println();
+		}
+	}
+
 }
