@@ -19,7 +19,7 @@ public class Board {
 		int counter = 0;
 		for (int row = 0; row < size; row++) {
 			for (int col = 0; col < size; col++) {
-				Square square = new Square(++counter, row, col, '0');
+				Square square = new Square(row, col, '0');
 				board[row][col] = square;
 			}
 		}
@@ -28,6 +28,5 @@ public class Board {
 	public Square[][] getBoard() {
 		return board;
 	}
-
 
 }

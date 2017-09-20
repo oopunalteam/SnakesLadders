@@ -79,9 +79,9 @@ public class UI {
 	public static void printBoard(Board board) {
 
 		for (int row = 0; row < board.getBoard().length; row++) {
-			System.out.print("|");
+			System.out.print("| ");
 			for (int col = 0; col < board.getBoard().length; col++) {
-				System.out.printf(board.getBoard()[row][col].getImage() + "|");
+				System.out.printf(board.getBoard()[row][col].getImage() + " | ");
 			}
 			System.out.println();
 		}

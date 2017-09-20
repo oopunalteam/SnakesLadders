@@ -9,7 +9,7 @@ public class GameEngine {
 	//movement. ONLY for testing
 
 	public static void movement (Player player, Board board) {
-		int move = player.getPosition().getIndex() + UI.askMovement();
+		int move = UI.askMovement();
 
 		player.setPosition(board.getBoard()[move][move]);
 
@@ -60,4 +60,5 @@ public class GameEngine {
 		UI.menu();
 		beginGame();
 	}
+	
 }

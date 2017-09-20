@@ -22,6 +22,4 @@ public class Player {
 		this.position = position;
 	}
 
-
-
 }
