@@ -3,6 +3,7 @@ package Business;
 import Data.Board;
 import Data.Player;
 import ui.UI;
+import java.util.Random;
 
 public class GameEngine {
 
@@ -61,6 +62,11 @@ public class GameEngine {
 
 		play(player, board);
 	}
+	
+	public static int crap(){
+            int numero = (int) (Math.random() * 12) + 1;
+            return numero;
+        }
 
 	public static void main (String[] args) {
 		//UI.menu();
