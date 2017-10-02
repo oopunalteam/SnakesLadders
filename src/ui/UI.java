@@ -1,5 +1,6 @@
 package ui;
 
+import Business.GamePlay;
 import Data.Board;
 import Data.Player;
 
@@ -87,11 +88,13 @@ public class UI {
 
 	//Request input
 
-	public static void askRoll() {
+	public static void askRoll(Player player, Board board) {
 		System.out.println("Roll dice?");
 		String order = input.next();
 		//Write feedback
+		GamePlay.rollDice(player, board);
 	}
+
 	public static void turnFeedback(int move) {
 		switch (move) {
 			case 1:
@@ -116,7 +119,13 @@ public class UI {
 		System.out.println(", you rolled a " + move);
 	}
 
-	//Testing only
+	public static void badFeedback () {
+		System.out.println("Seleccione una opción valida");
+		System.out.println();
+	}
+
+
+	/*Testing only
 	public static int askMovement(Board board) {
 		System.out.println("Select the square that you want to move to");
 		int move = input.nextInt();
@@ -126,9 +135,5 @@ public class UI {
 		}
 		return move;
 	}
-
-	public static void badFeedback () {
-		System.out.println("Seleccione una opción valida");
-		System.out.println();
-	}
+	*/
 }
