@@ -77,26 +77,54 @@ public class UI {
 
 	//Printing the game
 	public static void printBoard(Board board) {
-		int l = (int) Math.sqrt(board.getBoard().length);
-		System.out.print("| ");
-		for (int i = board.getBoard().length -1; i >= 0; --i) {
-			System.out.print(board.getBoard()[i] + " | ");
-			if (i % l == 0 && i!= 0) {
-				System.out.println();
-				System.out.print("| ");
-			}
-		}
-		System.out.println();
-		System.out.println();
-	}
-
-	public static int askMovement() {
-		System.out.println("Select the square that you want to move to");
-		return input.nextInt();
+		System.out.println(board);
 	}
 
 	public static void playerWins () {
 		System.out.println("You win!");
+	}
+
+
+	//Request input
+
+	public static void askRoll() {
+		System.out.println("Roll dice?");
+		String order = input.next();
+		//Write feedback
+	}
+	public static void turnFeedback(int move) {
+		switch (move) {
+			case 1:
+				System.out.print("bummer");
+				break;
+			case 2:
+				System.out.print("meh");
+				break;
+			case 3:
+				System.out.print("ok");
+				break;
+			case 4:
+				System.out.print("good");
+				break;
+			case 5:
+				System.out.print("great");
+				break;
+			case 6:
+				System.out.print("wow");
+				break;
+		}
+		System.out.println(", you rolled a " + move);
+	}
+
+	//Testing only
+	public static int askMovement(Board board) {
+		System.out.println("Select the square that you want to move to");
+		int move = input.nextInt();
+		if (move < 0 || move > board.getSize()) {
+			badFeedback();
+			askMovement(board);
+		}
+		return move;
 	}
 
 	public static void badFeedback () {

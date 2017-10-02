@@ -14,23 +14,32 @@ public class GamePlay {
 
 		while (!win) {
 
-			GameMechanics.movement(player, board);
+			//GameMechanics.movement(player, board);
+
+			GameMechanics.rollDice(player, board);
 
 			UI.printBoard(board);
 
 			win = GameMechanics.checkWin(player, board);
-
 		}
 	}
 
-	public static void startGame() {
+	public static void beginGame() {
+
 		Board board = new Board();
 		Player player = new Player();
 
 		UI.askSize(board);
 		UI.askToken(player);
 
+		/*Test
+		board.setSize(64);
+		player.setToken('a');
+		*/
+
 		board.setBoard();
+
+		GameMechanics.fillArcs(board);
 
 		player.setPosition(board.getBoard()[0]);
 
@@ -41,7 +50,6 @@ public class GamePlay {
 
 	public static void main (String[] args) {
 		UI.menu();
-		startGame();
+		beginGame();
 	}
-
 }

@@ -5,12 +5,7 @@ public class Player {
 	private char token;
 	private Square position;
 
-
-	public char getToken() {
-		return token;
-	}
-
-	public void setToken(char token) {
+	public final void setToken(char token) {
 		this.token = token;
 	}
 
@@ -20,6 +15,11 @@ public class Player {
 
 	public void setPosition(Square position) {
 		this.position = position;
-		position.setImage(position.getImage().concat(String.valueOf(this.token)));
+		position.setImage(position.getImage() + this);
+	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(this.token);
 	}
 }
