@@ -52,7 +52,7 @@ public class GamePlay {
 
 			UI.askRoll(player, board);
 
-			Arc.hasArcs(player);
+			Arc.hasArc(player);
 
 			UI.printBoard(board);
 
@@ -89,6 +89,5 @@ public class GamePlay {
 			return false;
 		}
 	}
-
 
 }
