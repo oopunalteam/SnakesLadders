@@ -52,6 +52,8 @@ public class GamePlay {
 
 			UI.askRoll(player, board);
 
+			rollDice(player, board);
+
 			Arc.hasArc(player);
 
 			UI.printBoard(board);
@@ -76,7 +78,12 @@ public class GamePlay {
 		//Erase the player token
 		player.getPosition().setImage(String.valueOf(player.getPosition().getIndex()));
 		//set new position
-		player.setPosition(board.getBoard()[player.getPosition().getIndex() + move - 1]);
+		if((player.getPosition().getIndex()+move-1)>board.getBoard().length) {
+			player.setPosition(board.getBoard()[board.getBoard().length - 1]);
+		}
+		else {
+			player.setPosition(board.getBoard()[player.getPosition().getIndex() + move - 1]);
+		}
 
 		UI.turnFeedback(move);
 	}
