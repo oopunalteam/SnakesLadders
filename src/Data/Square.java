@@ -33,11 +33,14 @@ public class Square {
 
 	public void setArc(Arc arc) {
 		this.arc = arc;
-		this.image = this.image + arc;
+		//this.image = this.image + arc;
 	}
 
 	@Override
 	public String toString() {
+		if(arc!=null) {
+			return image+arc;
+		}
 		return image;
 	}
 }

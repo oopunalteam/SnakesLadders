@@ -23,9 +23,18 @@ public class Board {
 		}
 	}
 
+	public final void setBoard(Square[] initBoard) {
+		board = new Square[size];
+		for (int i = 1; i <= size; i++) {
+			Square square = new Square(i);
+			board[i-1] = square;
+		}
+	}
+
 	public Square[] getBoard() {
 		return board;
 	}
+
 
 	@Override
 	public String toString() {

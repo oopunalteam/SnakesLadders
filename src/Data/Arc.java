@@ -52,7 +52,7 @@ public class Arc {
 	public static void hasArc(Player player) {
 		if (player.getPosition().getArc() != null) {
 			//Erase the player token
-			player.getPosition().setImage(String.valueOf(player.getPosition().getIndex()) + player.getPosition().getArc());
+			//player.getPosition().setImage(String.valueOf(player.getPosition().getIndex()) + player.getPosition().getArc());
 			//set new position
 			player.setPosition(player.getPosition().getArc().getExit());
 		}

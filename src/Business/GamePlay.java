@@ -37,6 +37,7 @@ public class GamePlay {
 	public static void beginGame() {
 
 		Board board = new Board();
+		Board initboard = new Board();
 		Player player = new Player();
 
 		int select=UI.askSize(board);
@@ -128,7 +129,7 @@ public class GamePlay {
 
 		int move = random.nextInt(5) + 1;
 		//Erase the player token
-		player.getPosition().setImage(String.valueOf(player.getPosition().getIndex()));
+		player.getPosition().setImage(Integer.toString(player.getPosition().getIndex()));
 		//set new position
 		if((player.getPosition().getIndex()+move-1)>board.getBoard().length) {
 			player.setPosition(board.getBoard()[board.getBoard().length - 1]);
