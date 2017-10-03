@@ -12,29 +12,14 @@ public class UI {
 
 
 	//Setting the game
-	public static void menu () {
+	public static int menu () {
 		System.out.println("Snakes & Ladders");
 		System.out.println("1. Play");
 		System.out.println("2. Instructions");
 		System.out.println("3. About");
 
 		int select = input.nextInt();
-		switch (select) {
-			case 1:
-				break;
-			case 2:
-				System.out.println("Instructions:");
-				System.out.println("Snakes & Ladders...");
-				menu();
-				break;
-			case 3:
-				System.out.println("This game is an early version of a \ngroup proyect for OOP");
-				menu();
-				break;
-			default:
-				badFeedback();
-				menu();
-		}
+		return select;
 	}
 
 	public static void askSize(Board board) {
@@ -91,8 +76,6 @@ public class UI {
 	public static void askRoll(Player player, Board board) {
 		System.out.println("Roll dice?");
 		String order = input.next();
-		//Write feedback
-		GamePlay.rollDice(player, board);
 	}
 
 	public static void turnFeedback(int move) {
