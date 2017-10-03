@@ -13,7 +13,24 @@ public class GamePlay {
 	private static Random random = new Random();
 
 	public static void main (String[] args) {
-		UI.menu();
+		int select=UI.menu();
+		while(select!=1) {
+			switch (select) {
+				case 2:
+					System.out.println("Instructions:");
+					System.out.println("Snakes & Ladders...");
+					select = UI.menu();
+					break;
+				case 3:
+					System.out.println("This game is an early version of a \ngroup proyect for OOP");
+					select = UI.menu();
+					break;
+				default:
+					UI.badFeedback();
+					select = UI.menu();
+			}
+		}
+
 		beginGame();
 	}
 
@@ -22,7 +39,28 @@ public class GamePlay {
 		Board board = new Board();
 		Player player = new Player();
 
-		UI.askSize(board);
+		int select=UI.askSize(board);
+		boolean flag=true;
+		while(flag) {
+			switch (select) {
+				case 1:
+					board.setSize((int) Math.pow(8, 2));
+					flag=false;
+					break;
+				case 2:
+					board.setSize((int) Math.pow(10, 2));
+					flag=false;
+					break;
+				case 3:
+					board.setSize((int) Math.pow(12, 2));
+					flag=false;
+					break;
+				default:
+					UI.badFeedback();
+					select=UI.askSize(board);
+			}
+		}
+
 		UI.askToken(player);
 
 		/*Testing only
