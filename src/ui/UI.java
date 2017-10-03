@@ -22,42 +22,21 @@ public class UI {
 		return select;
 	}
 
-	public static void askSize(Board board) {
+	public static int askSize(Board board) {
 		System.out.println("Difficulty:");
 		System.out.println("1: 8x8");
 		System.out.println("2. 10x10");
 		System.out.println("3. 12x12");
 
 		int select = input.nextInt();
-		switch (select) {
-			case 1:
-				board.setSize((int) Math.pow(8,2));
-				break;
-			case 2:
-				board.setSize((int) Math.pow(10,2));
-				break;
-			case 3:
-				board.setSize((int) Math.pow(12,2));
-				break;
-			default:
-				badFeedback();
-				askSize(board);
-		}
+		return select;
 	}
 
-	public static void askToken(Player player) {
+	public static char askToken(Player player) {
 		System.out.println("Select your token");
 
 		char token = input.next().charAt(0);
-
-		if ((64 < token && token < 91) || (96 < token && token < 123)) {
-			player.setToken(token);
-			System.out.println("You selected the token: " + token);
-			System.out.println();
-		} else {
-			badFeedback();
-			askToken(player);
-		}
+		return token;
 	}
 
 

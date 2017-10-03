@@ -18,8 +18,8 @@ public class Board {
 	public final void setBoard() {
 		board = new Square[size];
 		for (int i = 1; i <= size; i++) {
-				Square square = new Square(i);
-				board[i-1] = square;
+			Square square = new Square(i);
+			board[i-1] = square;
 		}
 	}
 
@@ -35,7 +35,7 @@ public class Board {
 		String printBoard = "| ";
 		for (int i = this.getBoard().length -1; i >= 0; --i) {
 
-			printBoard = printBoard.concat(this.getBoard()[i] + " | ");
+			printBoard = printBoard.concat(String.format("%10s",(this.getBoard()[i] + " | ")));
 
 			if (i % sideLength == 0 && i!= 0) {
 				printBoard = printBoard.concat("\n| ");

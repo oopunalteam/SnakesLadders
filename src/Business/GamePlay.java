@@ -61,7 +61,21 @@ public class GamePlay {
 			}
 		}
 
-		UI.askToken(player);
+		char token=UI.askToken(player);
+        flag=true;
+        while(flag) {
+            if ((64 < token && token < 91) || (96 < token && token < 123)) {
+                player.setToken(token);
+                System.out.println("You selected the token: " + token);
+                System.out.println();
+                flag=false;
+            }
+            else {
+                UI.badFeedback();
+                token=UI.askToken(player);
+            }
+        }
+
 
 		/*Testing only
 		board.setSize(64);
