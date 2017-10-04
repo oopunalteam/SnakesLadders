@@ -2,39 +2,26 @@ package Data;
 
 public class Board {
 
-
 	private int size;
 	private Square[] board;
 
-
-	public  void setSize(int size) {
+	public Board(int size) {
 		this.size = size;
+
+		board = new Square[size];
+		for (int i = 1; i <= size; i++) {
+			Square square = new Square(i);
+			board[i-1] = square;
+		}
 	}
 
 	public int getSize() {
 		return size;
 	}
 
-	public final void setBoard() {
-		board = new Square[size];
-		for (int i = 1; i <= size; i++) {
-			Square square = new Square(i);
-			board[i-1] = square;
-		}
-	}
-
-	public final void setBoard(Square[] initBoard) {
-		board = new Square[size];
-		for (int i = 1; i <= size; i++) {
-			Square square = new Square(i);
-			board[i-1] = square;
-		}
-	}
-
 	public Square[] getBoard() {
 		return board;
 	}
-
 
 	@Override
 	public String toString() {

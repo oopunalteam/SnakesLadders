@@ -5,7 +5,7 @@ public class Player {
 	private char token;
 	private Square position;
 
-	public final void setToken(char token) {
+	public Player(char token) {
 		this.token = token;
 	}
 

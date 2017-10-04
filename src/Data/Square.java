@@ -15,14 +15,6 @@ public class Square {
 		return index;
 	}
 
-	public void setIndex(int index) {
-		this.index = index;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
 	public void setImage(String image) {
 		this.image = image;
 	}
@@ -38,9 +30,10 @@ public class Square {
 
 	@Override
 	public String toString() {
-		if(arc!=null) {
-			return image+arc;
+		if(arc != null) {
+			return image + arc;
+		} else {
+			return image;
 		}
-		return image;
 	}
 }

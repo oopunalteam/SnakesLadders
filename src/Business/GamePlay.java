@@ -5,87 +5,33 @@ import Data.Board;
 import Data.Player;
 import ui.UI;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
-
 
 public class GamePlay {
 
 	private static Random random = new Random();
 
 	public static void main (String[] args) {
-		int select=UI.menu();
-		while(select!=1) {
-			switch (select) {
-				case 2:
-					System.out.println("Instructions:");
-					System.out.println("Snakes & Ladders...");
-					select = UI.menu();
-					break;
-				case 3:
-					System.out.println("This game is an early version of a \ngroup proyect for OOP");
-					select = UI.menu();
-					break;
-				default:
-					UI.badFeedback();
-					select = UI.menu();
-			}
-		}
-
+		UI.menu();
 		beginGame();
 	}
 
 	public static void beginGame() {
 
-		Board board = new Board();
-		Board initboard = new Board();
-		Player player = new Player();
+		int selectSize = UI.askSize();
+		Board board = new Board(selectSize);
 
-		int select=UI.askSize(board);
-		boolean flag=true;
-		while(flag) {
-			switch (select) {
-				case 1:
-					board.setSize((int) Math.pow(8, 2));
-					flag=false;
-					break;
-				case 2:
-					board.setSize((int) Math.pow(10, 2));
-					flag=false;
-					break;
-				case 3:
-					board.setSize((int) Math.pow(12, 2));
-					flag=false;
-					break;
-				default:
-					UI.badFeedback();
-					select=UI.askSize(board);
-			}
-		}
-
-		char token=UI.askToken(player);
-        flag=true;
-        while(flag) {
-            if ((64 < token && token < 91) || (96 < token && token < 123)) {
-                player.setToken(token);
-                System.out.println("You selected the token: " + token);
-                System.out.println();
-                flag=false;
-            }
-            else {
-                UI.badFeedback();
-                token=UI.askToken(player);
-            }
-        }
-
+		char selectToken = UI.askToken();
+		Player player = new Player(selectToken);
 
 		/*Testing only
-		board.setSize(64);
-		player.setToken('a');
+		Board board = new Board(64);
+		Player player = new Player('A');
 		*/
 
-		board.setBoard();
-
-		Arc.setArcs(board);
+		setArcs(board);
 
 		player.setPosition(board.getBoard()[0]);
 
@@ -99,15 +45,14 @@ public class GamePlay {
 		boolean win = false;
 
 		while (!win) {
-			/* Testing only
-			movement(player, board);
-			*/
 
-			UI.askRoll(player, board);
-
+			UI.askRoll();
 			rollDice(player, board);
 
-			Arc.hasArc(player);
+			// Testing only
+			//movement(player, board);
+
+			arcMovement(player);
 
 			UI.printBoard(board);
 
@@ -117,27 +62,30 @@ public class GamePlay {
 
 	/*Testing only
 	public static void movement (Player player, Board board) {
-		int move = UI.askMovement(board);
+		int move = UI.askMovement(board) - 1;
 		//Erase the player token
-		player.getPosition().setImage(String.valueOf(player.getPosition().getIndex()));
-		//set new position
-		player.setPosition(board.getBoard()[move - 1]);
+		//player.getPosition().setImage(Integer.toString(player.getPosition().getIndex()));
+		//Winning move
+		if((move) > board.getBoard().length) {
+			player.setPosition(board.getBoard()[board.getBoard().length - 1]);
+		} else {
+			//set new position
+			player.setPosition(board.getBoard()[move]);
+		}
 	}
 	*/
 
 	public static void rollDice (Player player, Board board) {
 
 		int move = random.nextInt(5) + 1;
-		//Erase the player token
-		player.getPosition().setImage(Integer.toString(player.getPosition().getIndex()));
-		//set new position
-		if((player.getPosition().getIndex()+move-1)>board.getBoard().length) {
+
+		//Winning move
+		if( (player.getPosition().getIndex()+ move - 1) > board.getBoard().length ) {
 			player.setPosition(board.getBoard()[board.getBoard().length - 1]);
-		}
-		else {
+		} else {
+			//set new position
 			player.setPosition(board.getBoard()[player.getPosition().getIndex() + move - 1]);
 		}
-
 		UI.turnFeedback(move);
 	}
 
@@ -150,4 +98,49 @@ public class GamePlay {
 		}
 	}
 
+
+	public static void setArcs(Board board) {
+		//create collection of random numbers
+		int numberDoors = random.nextInt(board.getSize()/2) + 2;
+
+		ArrayList<Integer> doors = new ArrayList<>(numberDoors);
+		for (int i = 0; i < board.getSize(); i++) {
+			doors.add(i);
+		}
+		Collections.shuffle(doors);
+
+		//
+		int entry, exit;
+		for (int j = 0, l = 1; j < numberDoors; j+= 2, l++) {
+			entry = j;
+			exit = j+1;
+			Arc arc = new Arc(l, board, doors.get(entry), doors.get(exit));
+
+			board.getBoard()[doors.get(entry)].setArc(arc);
+
+			board.getBoard()[doors.get(exit)].setArc(arc);
+		}
+
+		//Print. ONLY for testing
+		for (int k = 0, l = 1; k < numberDoors; k+=2, l++) {
+			System.out.println(l +": "+ String.valueOf(doors.get(k)+1) + ", "+ String.valueOf(doors.get(k+1)+1));
+		}
+	}
+
+	public static void arcMovement(Player player) {
+		if (player.getPosition().getArc() != null) {
+
+			int entry = player.getPosition().getIndex();
+			int exit = player.getPosition().getArc().getExit().getIndex();
+
+			//Feedback
+			if (entry < exit) {
+				UI.arcFeedback(true, entry, exit);
+			} else if (entry > exit) {
+				UI.arcFeedback(false, entry, exit);
+			}
+			//set new position
+			player.setPosition(player.getPosition().getArc().getExit());
+		}
+	}
 }
