@@ -1,5 +1,4 @@
 package Business;
-
 import Data.Arc;
 import Data.Board;
 import Data.Player;
@@ -13,97 +12,62 @@ import java.util.Random;
 public class GamePlay {
 
 	private static UI ui;
+	private static Board board;
+	private static ArrayList<Player> players = new ArrayList<>();
 	private static Random random = new Random();
 
-
 	public static void main (String[] args) {
+
 		ui = new UIText();
 		ui.menu();
-		beginGame();
-	}
 
-	public static void beginGame() {
+		//Setting the game
+		setBoard();
 
-		int selectSize = ui.askSize();
-		Board board = new Board(selectSize);
+		setPlayers();
 
-		char selectToken = ui.askToken();
-		Player player = new Player(selectToken);
+		setArcs();
 
-		/*Testing only
-		Board board = new Board(64);
-		Player player = new Player('A');
-		*/
-
-		setArcs(board);
-
-		player.setPosition(board.getBoard()[0]);
 
 		ui.printBoard(board);
 
-		play(player, board);
+		play();
 	}
 
-	public static void play (Player player, Board board) {
+	public static void play () {
 
 		boolean win = false;
-
+		//Round
 		while (!win) {
+			//Turns
+			for (int playerTurn = 0; playerTurn < players.size(); playerTurn++) {
 
-			ui.askRoll();
-			rollDice(player, board);
+				ui.askRoll(players.get(playerTurn));
+				rollDice(players.get(playerTurn));
 
-			// Testing only
-			//movement(player, board);
+				// Testing only
+				//movement(player, board);
 
-			arcMovement(player);
+				arcMovement(players.get(playerTurn));
 
-			ui.printBoard(board);
+				ui.printBoard(board);
 
-			win = checkWin(player, board);
+				win = checkWin(players.get(playerTurn));
+				if (win) {
+					break;
+				}
+			}
 		}
 	}
 
-	/*Testing only
-	public static void movement (Player player, Board board) {
-		int move = UIText.askMovement(board) - 1;
-		//Erase the player token
-		//player.getPosition().setImage(Integer.toString(player.getPosition().getIndex()));
-		//Winning move
-		if((move) > board.getBoard().length) {
-			player.setPosition(board.getBoard()[board.getBoard().length - 1]);
-		} else {
-			//set new position
-			player.setPosition(board.getBoard()[move]);
-		}
-	}
-	*/
+	//Setting the game
+	public static void setBoard() {
+		int selectSize = ui.askSize();
+		board = new Board(selectSize);
 
-	public static void rollDice (Player player, Board board) {
-
-		int move = random.nextInt(5) + 1;
-
-		//Winning move
-		if( (player.getPosition().getIndex()+ move - 1) > board.getBoard().length ) {
-			player.setPosition(board.getBoard()[board.getBoard().length - 1]);
-		} else {
-			//set new position
-			player.setPosition(board.getBoard()[player.getPosition().getIndex() + move - 1]);
-		}
-		ui.turnFeedback(move);
 	}
 
-	public static boolean checkWin (Player player, Board board) {
-		if (player.getPosition().getIndex() >= board.getBoard().length) {
-			ui.playerWins();
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-
-	public static void setArcs(Board board) {
+	public static void setArcs() {
 		//create collection of random numbers
 		int numberDoors = random.nextInt(board.getSize()/2) + 2;
 
@@ -131,6 +95,36 @@ public class GamePlay {
 		}
 	}
 
+	public static void setPlayers() {
+		int playerNum = ui.askPlayerNum();
+
+		for (int i = 0; i < playerNum; i++) {
+
+			char selectToken = ui.askToken(i+1);
+
+			Player player = new Player(selectToken);
+
+			players.add(i, player);
+
+			players.get(i).setPosition(board.getBoard()[0]);
+		}
+	}
+
+
+	//Gameplay
+	public static void rollDice (Player player) {
+
+		int move = random.nextInt(5) + 1;
+
+		try {
+			player.setPosition(board.getBoard()[player.getPosition().getIndex() + move - 1]);
+
+		} catch (ArrayIndexOutOfBoundsException winningMove) {
+			player.setPosition(board.getBoard()[board.getBoard().length - 1]);
+		}
+		ui.turnFeedback(move);
+	}
+
 	public static void arcMovement(Player player) {
 		if (player.getPosition().getArc() != null) {
 
@@ -145,6 +139,15 @@ public class GamePlay {
 			}
 			//set new position
 			player.setPosition(player.getPosition().getArc().getExit());
+		}
+	}
+
+	public static boolean checkWin (Player player) {
+		if (player.getPosition().getIndex() >= board.getBoard().length) {
+			ui.playerWins();
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

@@ -1,6 +1,6 @@
 package UserInterface;
-
 import Data.Board;
+import Data.Player;
 
 import java.util.Scanner;
 
@@ -57,18 +57,24 @@ public class UIText implements UI {
 	}
 
 	@Override
-	public char askToken() {
-		System.out.println("Select your token");
+	public char askToken(int playerNum) {
+		System.out.println("Player " + playerNum + ". select your token");
 
 		char token = input.next().charAt(0);
 
 		if ((64 < token && token < 91) || (96 < token && token < 123)) {
-			System.out.println("You selected the token: " + token);
+			System.out.println("You selected the token: " + token + "\n");
 		} else {
 			this.badFeedback();
-			token = this.askToken();
+			token = this.askToken(playerNum);
 		}
 		return token;
+	}
+
+	@Override
+	public int askPlayerNum() {
+		System.out.println("How many players are going to play?");
+		return input.nextInt();
 	}
 
 
@@ -86,8 +92,8 @@ public class UIText implements UI {
 
 	//Request input
 	@Override
-	public void askRoll() {
-		System.out.println("Roll dice?");
+	public void askRoll(Player player) {
+		System.out.println("Player "+ player +", roll dice?");
 		String order = input.next();
 	}
 
@@ -130,7 +136,7 @@ public class UIText implements UI {
 
 	@Override
 	public void badFeedback () {
-		System.out.println("Seleccione una opción valida \n");
+		System.out.println("Select a valid option \n");
 	}
 
 

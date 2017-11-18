@@ -1,8 +1,6 @@
 package UserInterface;
-
 import Data.Board;
-
-import java.util.Scanner;
+import Data.Player;
 
 public interface UI {
 
@@ -11,7 +9,9 @@ public interface UI {
 
 	int askSize();
 
-	char askToken();
+	int askPlayerNum();
+
+	char askToken(int playerNum);
 
 
 	//Printing the game
@@ -21,7 +21,7 @@ public interface UI {
 
 
 	//Request input
-	void askRoll();
+	void askRoll(Player player);
 
 
 	//Feedback

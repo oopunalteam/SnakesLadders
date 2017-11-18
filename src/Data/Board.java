@@ -37,8 +37,8 @@ public class Board {
 				printBoard = printBoard.concat("\n| ");
 			}
 		}
-
-		printBoard = printBoard.concat("\n");
+		printBoard.concat("\n");
+		
 		return printBoard;
 	}
 }

@@ -15,7 +15,7 @@ public class Player {
 
 	public void setPosition(Square position) {
 		this.position = position;
-		position.setImage(Integer.toString(position.getIndex()) + this);
+		position.setImage(this + position.getImage());
 	}
 
 	@Override

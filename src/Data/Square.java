@@ -19,6 +19,10 @@ public class Square {
 		this.image = image;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
 	public Arc getArc() {
 		return arc;
 	}
