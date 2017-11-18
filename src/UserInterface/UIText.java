@@ -1,15 +1,16 @@
-package ui;
+package UserInterface;
 
 import Data.Board;
 
 import java.util.Scanner;
 
-public class UI {
+public class UIText implements UI {
 
-	private static Scanner input = new Scanner(System.in);
+	private Scanner input = new Scanner(System.in);
 
 	//Setting the game
-	public static void menu () {
+	@Override
+	public void menu () {
 		System.out.println("Snakes & Ladders" + "\n 1. Play" +"\n 2. Instructions" + "\n 3. About");
 
 		int select = input.nextInt();
@@ -20,19 +21,20 @@ public class UI {
 			case 2:
 				System.out.println("Instructions:");
 				System.out.println("Write something to roll the dice");
-				UI.menu();
+				this.menu();
 				break;
 			case 3:
 				System.out.println("This game is an early version of a \ngroup proyect for OOP");
-				UI.menu();
+				this.menu();
 				break;
 			default:
-				UI.badFeedback();
-				UI.menu();
+				this.badFeedback();
+				this.menu();
 		}
 	}
 
-	public static int askSize() {
+	@Override
+	public int askSize() {
 		System.out.println("Difficulty:" + "\n 1: 8x8" + "\n 2. 10x10 " + "\n 3. 12x12");
 
 		int size;
@@ -48,13 +50,14 @@ public class UI {
 				size = (int) Math.pow(12, 2);
 				break;
 			default:
-				UI.badFeedback();
-				size = UI.askSize();
+				this.badFeedback();
+				size = this.askSize();
 		}
 		return size;
 	}
 
-	public static char askToken() {
+	@Override
+	public char askToken() {
 		System.out.println("Select your token");
 
 		char token = input.next().charAt(0);
@@ -62,32 +65,36 @@ public class UI {
 		if ((64 < token && token < 91) || (96 < token && token < 123)) {
 			System.out.println("You selected the token: " + token);
 		} else {
-			UI.badFeedback();
-			token = UI.askToken();
+			this.badFeedback();
+			token = this.askToken();
 		}
 		return token;
 	}
 
 
 	//Printing the game
-	public static void printBoard(Board board) {
+	@Override
+	public void printBoard(Board board) {
 		System.out.println(board);
 	}
 
-	public static void playerWins () {
+	@Override
+	public void playerWins () {
 		System.out.println("You win!");
 	}
 
 
 	//Request input
-	public static void askRoll() {
+	@Override
+	public void askRoll() {
 		System.out.println("Roll dice?");
 		String order = input.next();
 	}
 
 
 	//Feedback
-	public static void turnFeedback(int move) {
+	@Override
+	public void turnFeedback(int move) {
 		switch (move) {
 			case 1:
 				System.out.print("Bummer");
@@ -111,7 +118,8 @@ public class UI {
 		System.out.println(", you rolled a " + move);
 	}
 
-	public static void arcFeedback (boolean good, int entry, int exit) {
+	@Override
+	public void arcFeedback (boolean good, int entry, int exit) {
 		if (good) {
 			System.out.println("You climbed a ladder! You moved from square "+ entry +" to square "+ exit);
 		} else if (!good) {
@@ -120,12 +128,15 @@ public class UI {
 
 	}
 
-	public static void badFeedback () {
+	@Override
+	public void badFeedback () {
 		System.out.println("Seleccione una opción valida \n");
 	}
 
+
 	//Testing only
-	public static int askMovement(Board board) {
+	@Override
+	public int askMovement(Board board) {
 		System.out.println("Select the square that you want to move to");
 		int move = input.nextInt();
 		if (move < 0 || move > board.getSize()) {
@@ -134,5 +145,4 @@ public class UI {
 		}
 		return move;
 	}
-
 }

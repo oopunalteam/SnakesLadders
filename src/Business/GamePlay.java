@@ -3,7 +3,8 @@ package Business;
 import Data.Arc;
 import Data.Board;
 import Data.Player;
-import ui.UI;
+import UserInterface.UI;
+import UserInterface.UIText;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,19 +12,22 @@ import java.util.Random;
 
 public class GamePlay {
 
+	private static UI ui;
 	private static Random random = new Random();
 
+
 	public static void main (String[] args) {
-		UI.menu();
+		ui = new UIText();
+		ui.menu();
 		beginGame();
 	}
 
 	public static void beginGame() {
 
-		int selectSize = UI.askSize();
+		int selectSize = ui.askSize();
 		Board board = new Board(selectSize);
 
-		char selectToken = UI.askToken();
+		char selectToken = ui.askToken();
 		Player player = new Player(selectToken);
 
 		/*Testing only
@@ -35,7 +39,7 @@ public class GamePlay {
 
 		player.setPosition(board.getBoard()[0]);
 
-		UI.printBoard(board);
+		ui.printBoard(board);
 
 		play(player, board);
 	}
@@ -46,7 +50,7 @@ public class GamePlay {
 
 		while (!win) {
 
-			UI.askRoll();
+			ui.askRoll();
 			rollDice(player, board);
 
 			// Testing only
@@ -54,7 +58,7 @@ public class GamePlay {
 
 			arcMovement(player);
 
-			UI.printBoard(board);
+			ui.printBoard(board);
 
 			win = checkWin(player, board);
 		}
@@ -62,7 +66,7 @@ public class GamePlay {
 
 	/*Testing only
 	public static void movement (Player player, Board board) {
-		int move = UI.askMovement(board) - 1;
+		int move = UIText.askMovement(board) - 1;
 		//Erase the player token
 		//player.getPosition().setImage(Integer.toString(player.getPosition().getIndex()));
 		//Winning move
@@ -86,12 +90,12 @@ public class GamePlay {
 			//set new position
 			player.setPosition(board.getBoard()[player.getPosition().getIndex() + move - 1]);
 		}
-		UI.turnFeedback(move);
+		ui.turnFeedback(move);
 	}
 
 	public static boolean checkWin (Player player, Board board) {
 		if (player.getPosition().getIndex() >= board.getBoard().length) {
-			UI.playerWins();
+			ui.playerWins();
 			return true;
 		} else {
 			return false;
@@ -135,9 +139,9 @@ public class GamePlay {
 
 			//Feedback
 			if (entry < exit) {
-				UI.arcFeedback(true, entry, exit);
+				ui.arcFeedback(true, entry, exit);
 			} else if (entry > exit) {
-				UI.arcFeedback(false, entry, exit);
+				ui.arcFeedback(false, entry, exit);
 			}
 			//set new position
 			player.setPosition(player.getPosition().getArc().getExit());
