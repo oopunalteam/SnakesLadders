@@ -1,7 +1,9 @@
 package UserInterface;
 import Data.Board;
 import Data.Player;
+import Data.Square;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UIText implements UI {
@@ -10,55 +12,30 @@ public class UIText implements UI {
 
 	//Setting the game
 	@Override
-	public void menu () {
-		System.out.println("Snakes & Ladders" + "\n 1. Play" +"\n 2. Instructions" + "\n 3. About");
+	public int printMenu() {
+		System.out.println("\tSnakes & Ladders" + "\n1. Play" +"\n2. Instructions" + "\n3. About" + "\n4. Quit");
+		return input.nextInt();
+	}
 
-		int select = input.nextInt();
-		switch (select) {
-			case 1:
-				System.out.println("PLAY");
-				break;
-			case 2:
-				System.out.println("Instructions:");
-				System.out.println("Write something to roll the dice");
-				this.menu();
-				break;
-			case 3:
-				System.out.println("This game is an early version of a \ngroup proyect for OOP");
-				this.menu();
-				break;
-			default:
-				this.badFeedback();
-				this.menu();
-		}
+	@Override
+	public void printInstructions() {
+		System.out.println("\tInstructions"+"\nWrite something to roll the dice\n");
+	}
+
+	@Override
+	public void printAbout() {
+		System.out.println("\tAbout"+"\nThis game is a text version of Snakes & Ladders, \na group proyect for OOP\n");
 	}
 
 	@Override
 	public int askSize() {
-		System.out.println("Difficulty:" + "\n 1: 8x8" + "\n 2. 10x10 " + "\n 3. 12x12");
-
-		int size;
-		int select = input.nextInt();
-		switch (select) {
-			case 1:
-				size = (int) Math.pow(8, 2);
-				break;
-			case 2:
-				size = (int) Math.pow(10, 2);
-				break;
-			case 3:
-				size = (int) Math.pow(12, 2);
-				break;
-			default:
-				this.badFeedback();
-				size = this.askSize();
-		}
-		return size;
+		System.out.println("\tDifficulty:" + "\n1. 8x8" + "\n2. 10x10" + "\n3. 12x12");
+		return input.nextInt();
 	}
 
 	@Override
 	public char askToken(int playerNum) {
-		System.out.println("Player " + playerNum + ". select your token");
+		System.out.println("Player " + playerNum + ". please select your token:");
 
 		char token = input.next().charAt(0);
 
@@ -85,7 +62,7 @@ public class UIText implements UI {
 	}
 
 	@Override
-	public void playerWins () {
+	public void playerWins() {
 		System.out.println("You win!");
 	}
 
@@ -100,7 +77,7 @@ public class UIText implements UI {
 
 	//Feedback
 	@Override
-	public void turnFeedback(int move) {
+	public void turnFeedback(int move, Player player, Square position) {
 		switch (move) {
 			case 1:
 				System.out.print("Bummer");
@@ -121,7 +98,7 @@ public class UIText implements UI {
 				System.out.print("WOW");
 				break;
 		}
-		System.out.println(", you rolled a " + move);
+		System.out.println(", player "+player+" rolled a "+move+". You're now at square "+String.valueOf(position.getIndex()));
 	}
 
 	@Override
@@ -135,7 +112,7 @@ public class UIText implements UI {
 	}
 
 	@Override
-	public void badFeedback () {
+	public void badFeedback() {
 		System.out.println("Select a valid option \n");
 	}
 

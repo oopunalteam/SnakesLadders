@@ -1,11 +1,16 @@
 package UserInterface;
 import Data.Board;
 import Data.Player;
+import Data.Square;
 
 public interface UI {
 
 	//Setting the game
-	void menu ();
+	int printMenu();
+
+	void printInstructions();
+
+	void printAbout();
 
 	int askSize();
 
@@ -17,7 +22,7 @@ public interface UI {
 	//Printing the game
 	void printBoard(Board board);
 
-	void playerWins ();
+	void playerWins();
 
 
 	//Request input
@@ -25,11 +30,11 @@ public interface UI {
 
 
 	//Feedback
-	void turnFeedback(int move);
+	void turnFeedback(int move, Player player, Square position);
 
-	void arcFeedback (boolean good, int entry, int exit);
+	void arcFeedback(boolean good, int entry, int exit);
 
-	void badFeedback ();
+	void badFeedback();
 
 	//Testing only
 	int askMovement(Board board);

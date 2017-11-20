@@ -19,22 +19,41 @@ public class GamePlay {
 	public static void main (String[] args) {
 
 		ui = new UIText();
-		ui.menu();
 
-		//Setting the game
+		do {
+			int	select = ui.printMenu();
+
+			switch (select) {
+				case 1:
+					beginGame();
+					break;
+				case 2:
+					ui.printInstructions();
+					break;
+				case 3:
+					ui.printAbout();
+					break;
+				case 4:
+					System.exit(0);
+				default:
+					ui.badFeedback();
+			}
+		} while (true);
+	}
+
+	public static void beginGame() {
 		setBoard();
 
 		setPlayers();
 
 		setArcs();
 
-
-		ui.printBoard(board);
-
 		play();
 	}
 
 	public static void play () {
+
+		ui.printBoard(board);
 
 		boolean win = false;
 		//Round
@@ -63,8 +82,23 @@ public class GamePlay {
 	//Setting the game
 	public static void setBoard() {
 		int selectSize = ui.askSize();
-		board = new Board(selectSize);
+		int size;
 
+		switch (selectSize) {
+			case 1:
+				size = (int) Math.pow(8, 2);
+				break;
+			case 2:
+				size = (int) Math.pow(10, 2);
+				break;
+			case 3:
+				size = (int) Math.pow(12, 2);
+				break;
+			default:
+				ui.badFeedback();
+				size = ui.askSize();
+		}
+		board = new Board(size);
 	}
 
 	public static void setArcs() {
@@ -77,7 +111,7 @@ public class GamePlay {
 		}
 		Collections.shuffle(doors);
 
-		//
+		//Create the arcs that connect squares
 		int entry, exit;
 		for (int j = 0, l = 1; j < numberDoors; j+= 2, l++) {
 			entry = j;
@@ -89,7 +123,7 @@ public class GamePlay {
 			board.getBoard()[doors.get(exit)].setArc(arc);
 		}
 
-		//Print. ONLY for testing
+		//Print ONLY for testing
 		for (int k = 0, l = 1; k < numberDoors; k+=2, l++) {
 			System.out.println(l +": "+ String.valueOf(doors.get(k)+1) + ", "+ String.valueOf(doors.get(k+1)+1));
 		}
@@ -111,7 +145,7 @@ public class GamePlay {
 	}
 
 
-	//Gameplay
+	//GamePlay
 	public static void rollDice (Player player) {
 
 		int move = random.nextInt(5) + 1;
@@ -122,7 +156,7 @@ public class GamePlay {
 		} catch (ArrayIndexOutOfBoundsException winningMove) {
 			player.setPosition(board.getBoard()[board.getBoard().length - 1]);
 		}
-		ui.turnFeedback(move);
+		ui.turnFeedback(move, player, player.getPosition());
 	}
 
 	public static void arcMovement(Player player) {
